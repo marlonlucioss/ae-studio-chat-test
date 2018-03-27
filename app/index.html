@@ -3,15 +3,61 @@
 
 <head>
   <title>mini-chat</title>
+    <style>
+        ul{
+            list-style: none;
+            padding: 0;
+        }
+        li{
+            padding: 15px;
+            border-bottom: 1px solid lightgray;
+        }
+        .user{
+            font-size: 20px;
+        }
+        .date{
+            font-size: 11px;
+        }
+        .message{
+            background-color: #f0f2ef;
+        }
+        .message.me{
+            background-color: #dbffdb;
+        }
+        .nickname-content{
+            margin-bottom: 20px;
+        }
+        #message-field{
+            width: 92%;
+            height: 40px;
+            padding-left: 1%;
+            padding-right: 1%;
+        }
+        #message-button{
+            width: 5%;
+            height: 47px;
+            background-color: #6868ff;
+            color: white;
+            font-size: 14px;
+        }
+    </style>
 </head>
 
 <body ng-app="myApp">
   <div ng-controller="MainController">
-    <input type="text" ng-model="message">
-    <button ng-click="send()">Send</button>
+    <div class="nickname-content" ng-show="send_disabled">
+      <input type="text" ng-model="username" placeholder="User Name">
+      <button ng-click="confirmNickName()">Confirm Nickname</button>
+    </div>
+    <div class="message-content" ng-show="!send_disabled">
+      <input type="text" ng-model="message" id="message-field">
+      <button ng-disabled="send_disabled" ng-click="send()" id="message-button">Send</button>
+    </div>
     <hr>
     <ul>
-      <li ng-repeat="message in messages">{{ message.date}} : {{message.text}}</li>
+      <li class="message" ng-repeat="message in messages" ng-class=" message.username == username ? 'me' : ''">
+          <span class="date">{{message.date}}</span> <span class="user">{{message.username}}</span> says: {{message.text}}
+      </li>
     </ul>
   </div>
   <script src="js/angular.js"></script>

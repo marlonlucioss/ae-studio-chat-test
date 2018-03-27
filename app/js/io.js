@@ -12,7 +12,6 @@ factory('io', function ($http) {
 
       socket = io.connect(conf.ioServer);
       socket.on('event.response', function (data) {
-        var message = data;
         if (data.room === ioRoom) {
           return watches['event.message'](data.message);
         }
